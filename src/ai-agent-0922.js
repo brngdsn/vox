@@ -19,7 +19,7 @@ const whiteBg = '\x1b[47m';
 const green = '\x1b[32m';
 const yellow = '\x1b[33m';
 const white = '\x1b[37m';
-const greenBg = '\x1b[37m';
+const greenBg = '\x1b[42m';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -95,7 +95,7 @@ export async function serveWorkspace(workspacePath) {
   app.use(express.static(workspacePath));
 
   const server = app.listen(port, () => {
-    console.log(`${white}${greenBg}Workspace is being served at http://localhost:${port}${reset}`);
+    console.log(`\n${white}${greenBg}Workspace is being served at http://localhost:${port}${reset}`);
   });
 
   return `http://localhost:${port}`;
@@ -360,7 +360,14 @@ export async function agent(userInput) {
       const functionArgs = JSON.parse(functionCall.function.arguments);
       const functionArgsArr = Object.values(functionArgs);
       let functionResponse;
-      console.log({ functionCall, functionName, functionToCall, });
+
+      console.log(`${red}${functionName}${reset}`);
+      if (functionArgs.content) {
+        console.log(`${whiteBg}${functionArgs.filePath}${reset}`);
+        console.log(`${whiteBg}${functionArgs.content}${reset}`);
+      } else {
+        console.log(`${whiteBg}${JSON.stringify(functionArgs, null, 2)}${reset}`);
+      }
 
       try {
         functionResponse = await functionToCall.apply(null, functionArgsArr);
