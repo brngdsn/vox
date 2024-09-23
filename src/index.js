@@ -25,6 +25,11 @@ const reset = '\x1b[0m';  // Reset color
 const black = '\x1b[30m';
 const whiteBg = '\x1b[47m';
 const green = '\x1b[32m';
+const yellow = '\x1b[33m';
+const white = '\x1b[37m';
+const greenBg = '\x1b[42m';
+const cyan = '\x1b[36m';
+
 
 const spinner = ora('');
 
@@ -55,7 +60,7 @@ async function checkEnvVariable() {
     const envContent = await fs.readFile(envPath, 'utf8');
     const envVariables = envContent.split('\n');
     const voxApiKey = envVariables.find(line => line.startsWith('OPENAI_API_KEY'));
-    return voxApiKey ? `${red}OPENAI_API_KEY exists${reset}` : `${grey}OPENAI_API_KEY missing${reset}`;
+    return voxApiKey ? `${red}OPENAI_API_KEY exists` : `${grey}OPENAI_API_KEY missing`;
   } catch {
     return '.env file missing';
   }
@@ -97,7 +102,8 @@ async function recursiveIndex() {
   const envReport = await checkEnvVariable();
 
   // Create summary string
-  let summaryString = `Indexed ${numeral(summary.files).format(`0,0`)} files across ${numeral(summary.folders).format(`0,0`)} folders over ${numeral(summary.totalBytes).format(`0.0b`)}\n`;
+  let summaryString = `${black}Model: ${red}GPT-4o${reset}\n`;
+  summaryString += `${whiteBg}${black}Indexed ${numeral(summary.files).format(`0,0`)} files across ${numeral(summary.folders).format(`0,0`)} folders over ${numeral(summary.totalBytes).format(`0.0b`)}\n`;
 
   if (gitBranch) {
     summaryString += `Git repo: Yes, branch "${gitBranch}"\n`;
@@ -106,7 +112,6 @@ async function recursiveIndex() {
   }
 
   summaryString += `Environment: ${envReport}\n`;
-  summaryString += `Model: GPT-4o`;
 
   return summaryString;
 }
@@ -340,12 +345,11 @@ function renderRecordingStatus(seconds, decibels) {
 // Function to handle /help command
 async function handleHelp(rl) {
   console.log(`${red}
-Available Commands:
+${grey}Available Commands:${reset}
 
-/text   - Enter text input and save to text_input.txt
-/voice  - Record audio input and save to voice_input.wav
-/help   - Display this help message
-/exit   - Exit the application
+  ${red}/voice${grey}  - Record audio input and save to voice_input.wav${reset}
+  ${red}/help${grey}  - Display this help message${reset}
+  ${red}/exit${grey}   - Exit the application${reset}
   ${reset}`);
   rl.prompt();
 }
@@ -380,7 +384,7 @@ async function main() {
           await handleHelp(rl);
           break;
         case '/exit':
-          console.log(`${red}Goodbye!${reset}`);
+          console.log(`${grey}Ok!${reset}`);
           rl.close();
           process.exit(0);
           break;
