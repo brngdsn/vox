@@ -1,5 +1,5 @@
 {
-  "name": "vox",
+  "name": "@brngdsn/vox",
   "version": "0.2.1",
   "type": "module",
   "description": "voice-operated execution",
