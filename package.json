@@ -1,6 +1,6 @@
 {
   "name": "@brngdsn/vox",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "description": "voice-operated execution",
   "main": "src/index.js",
