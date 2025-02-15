@@ -8,7 +8,7 @@ as the program, i should use npm module chalk, so i don't have to use the cumber
 don't used simplified approaches, and don't just demonstrate.
 
 
-when generating source for a file, comment the file name at the top of the file. only respond with the file structure, and the source code.
+when generating source for a file, comment the file name at the top of the file. only respond with the file structure, and the source code, e.g.,
 
 ```js
 // src/index.js
