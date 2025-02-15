@@ -332,7 +332,7 @@ const availableTools = {
 
 const messages = [
   {
-    role: "system",
+    role: "user",
     content: `You are a helpful assistant. Only use the functions you have been provided with.`,
   },
 ];
@@ -345,7 +345,7 @@ export async function agent(userInput) {
 
   for (let i = 0; i < 20; i++) { // Increased iterations to accommodate more complex tasks
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "o1-mini",
       messages: messages,
       tools: tools,
     });
@@ -371,6 +371,7 @@ export async function agent(userInput) {
 
       try {
         functionResponse = await functionToCall.apply(null, functionArgsArr);
+        console.log(`${whiteBg}${black}${functionResponse}${reset}`)
       } catch (error) {
         functionResponse = `Error executing ${functionName}: ${error.message}`;
       }
