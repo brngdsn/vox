@@ -43,7 +43,7 @@ export async function recursiveIndex() {
   } catch {
     envReport = ".env file missing";
   }
-  let summaryString = chalk.black.bgRed("Model: GPT-4o") + "\n";
+  let summaryString = chalk.black.bgRed("Model: o3-mini") + "\n";
   summaryString += chalk.black.bgWhite(
     `Indexed ${numeral(summary.files).format("0,0")} files across ${numeral(summary.folders).format("0,0")} folders over ${numeral(summary.totalBytes).format("0.0b")}\n`
   );
@@ -62,7 +62,7 @@ export async function displayHeader() {
     packageData = JSON.parse(data);
   } catch (error) {
     console.error("Error reading package.json:", error);
-    packageData = { name: "vox", version: "1.0.0" };
+    packageData = { name: "vox", version: "0.2.4" };
   }
 
   const asciiArt = chalk.red(`
